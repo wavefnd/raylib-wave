@@ -1,0 +1,28 @@
+extern(c) {
+    fun DrawPixel(x: i32, y: i32, color: Color);
+
+    fun DrawLine(
+        startX: i32,
+        startY: i32,
+        endX: i32,
+        endY: i32,
+        color: Color
+    );
+
+    fun DrawCircle(
+        centerX: i32,
+        centerY: i32,
+        radius: f32,
+        color: Color
+    );
+
+    fun DrawRectangle(
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        color: Color
+    );
+
+    fun DrawRectangleRec(rec: Rectangle, color: Color);
+}

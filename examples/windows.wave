@@ -1,0 +1,15 @@
+import("../raylib");
+
+fun main() {
+    InitWindow(800, 600, "Wave + raylib");
+
+    SetTargetFPS(60);
+
+    while (WindowShouldClose() == 0) {
+        BeginDrawing();
+        ClearBackground(Color { r: 20, g: 20, b: 20, a: 255 });
+        EndDrawing();
+    }
+
+    CloseWindow();
+}

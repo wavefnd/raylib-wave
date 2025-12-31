@@ -1,0 +1,21 @@
+extern(c) {
+    fun DrawText(
+        text: ptr<u8>,
+        posX: i32,
+        posY: i32,
+        fontSize: i32,
+        color: Color
+    );
+
+    fun LoadFont(fileName: ptr<u8>) -> Font;
+    fun UnloadFont(font: Font);
+
+    fun DrawTextEx(
+        font: Font,
+        text: ptr<u8>,
+        position: Vector2,
+        fontSize: f32,
+        spacing: f32,
+        tint: Color
+    );
+}
