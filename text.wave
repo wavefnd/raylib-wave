@@ -4,7 +4,7 @@ extern(c) {
         posX: i32,
         posY: i32,
         fontSize: i32,
-        color: Color
+        color: ptr<Color>
     );
 
     fun LoadFont(fileName: ptr<u8>) -> Font;
@@ -16,6 +16,6 @@ extern(c) {
         position: Vector2,
         fontSize: f32,
         spacing: f32,
-        tint: Color
+        tint: ptr<Color>
     );
 }

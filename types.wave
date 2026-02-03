@@ -1,62 +1,62 @@
 struct Vector2 {
-    x: f32,
-    y: f32,
+    x: f32;
+    y: f32;
 }
 
 struct Vector3 {
-    x: f32,
-    y: f32,
-    z: f32,
+    x: f32;
+    y: f32;
+    z: f32;
 }
 
 struct Rectangle {
-    x: f32,
-    y: f32,
-    width: f32,
-    height: f32,
+    x: f32;
+    y: f32;
+    width: f32;
+    height: f32;
 }
 
 struct Color {
-    r: u8,
-    g: u8,
-    b: u8,
-    a: u8,
+    r: u8;
+    g: u8;
+    b: u8;
+    a: u8;
 }
 
 struct Image {
-    data: ptr<u8>,
-    width: i32,
-    height: i32,
-    mipmaps: i32,
-    format: i32,
+    data: ptr<u8>;
+    width: i32;
+    height: i32;
+    mipmaps: i32;
+    format: i32;
 }
 
 struct Texture2D {
-    id: u32,
-    width: i32,
-    height: i32,
-    mipmaps: i32,
-    format: i32,
+    id: u32;
+    width: i32;
+    height: i32;
+    mipmaps: i32;
+    format: i32;
 }
 
 struct Font {
-    baseSize: i32,
-    glyphCount: i32,
-    glyphPadding: i32,
-    texture: Texture2D,
-    recs: ptr<Rectangle>,
-    glyphs: ptr<u8>,
+    baseSize: i32;
+    glyphCount: i32;
+    glyphPadding: i32;
+    texture: Texture2D;
+    recs: ptr<Rectangle>;
+    glyphs: ptr<u8>;
 }
 
 struct Sound {
-    stream: ptr<u8>,
-    frameCount: u32,
+    stream: ptr<u8>;
+    frameCount: u32;
 }
 
 struct Music {
-    stream: ptr<u8>,
-    frameCount: u32,
-    looping: i32,
-    ctxType: i32,
-    ctxData: ptr<u8>,
+    stream: ptr<u8>;
+    frameCount: u32;
+    looping: i32;
+    ctxType: i32;
+    ctxData: ptr<u8>;
 }

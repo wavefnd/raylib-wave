@@ -1,19 +1,19 @@
 extern(c) {
-    fun DrawPixel(x: i32, y: i32, color: Color);
+    fun DrawPixel(x: i32, y: i32, color: ptr<Color>);
 
     fun DrawLine(
         startX: i32,
         startY: i32,
         endX: i32,
         endY: i32,
-        color: Color
+        color: ptr<Color>
     );
 
     fun DrawCircle(
         centerX: i32,
         centerY: i32,
         radius: f32,
-        color: Color
+        color: ptr<Color>
     );
 
     fun DrawRectangle(
@@ -21,8 +21,8 @@ extern(c) {
         y: i32,
         width: i32,
         height: i32,
-        color: Color
+        color: ptr<Color>
     );
 
-    fun DrawRectangleRec(rec: Rectangle, color: Color);
+    fun DrawRectangleRec(rec: Rectangle, color: ptr<Color>);
 }

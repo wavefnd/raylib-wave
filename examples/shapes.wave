@@ -2,15 +2,21 @@ import("../raylib");
 
 fun main() {
     InitWindow(800, 600, "Shapes");
+    SetTargetFPS(60);
+
+    var red: Color = Color { r: 255, g: 0, b: 0, a: 255 };
+    var green: Color = Color { r: 0, g: 255, b: 0, a: 255 };
+    var blue: Color = Color { r: 0, g: 0, b: 255, a: 255 };
+    var bg: Color = Color { r: 30, g: 30, b: 30, a: 255 };
 
     while (WindowShouldClose() == 0) {
         BeginDrawing();
 
-        ClearBackground(Color { r: 30, g: 30, b: 30, a: 255 });
+        ClearBackground(&bg);
 
-        DrawLine(100, 100, 300, 100, Color { r: 255, g: 0, b: 0, a: 255 });
-        DrawCircle(400, 300, 50.0, Color { r: 0, g: 255, b: 0, a: 255 });
-        DrawRectangle(500, 200, 120, 80, Color { r: 0, g: 0, b: 255, a: 255 });
+        DrawLine(100, 100, 300, 100, &red);
+        DrawCircle(400, 300, 50.0, &green);
+        DrawRectangle(500, 200, 120, 80, &blue);
 
         EndDrawing();
     }

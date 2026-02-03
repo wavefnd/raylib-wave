@@ -7,7 +7,7 @@ extern(c) {
     fun BeginDrawing();
     fun EndDrawing();
 
-    fun ClearBackground(color: Color);
+    fun ClearBackground(color: ptr<Color>);
 
     fun SetTargetFPS(fps: i32);
     fun GetFPS() -> i32;

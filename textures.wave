@@ -9,13 +9,13 @@ extern(c) {
         texture: Texture2D,
         posX: i32,
         posY: i32,
-        tint: Color
+        tint: ptr<Color>
     );
 
     fun DrawTextureRec(
         texture: Texture2D,
         source: Rectangle,
         position: Vector2,
-        tint: Color
+        tint: ptr<Color>
     );
 }

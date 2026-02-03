@@ -2,12 +2,16 @@ import("../raylib");
 
 fun main() {
     InitWindow(800, 600, "Text");
+    SetTargetFPS(60);
+
+    var black: Color = Color { r: 0, g: 0, b: 0, a: 255 };
+    var white: Color = Color { r: 255, g: 255, b: 255, a: 255 };
 
     while (WindowShouldClose() == 0) {
         BeginDrawing();
 
-        ClearBackground(Color { r: 0, g: 0, b: 0, a: 255 });
-        DrawText("Hello from Wave", 200, 280, 24, Color { r: 255, g: 255, b: 255, a: 255 });
+        ClearBackground(&black);
+        DrawText("Hello from Wave", 200, 280, 24, &white);
 
         EndDrawing();
     }
