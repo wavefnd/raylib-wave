@@ -10,8 +10,8 @@ fun main() {
     while (WindowShouldClose() == 0) {
         BeginDrawing();
 
-        ClearBackground(&black);
-        DrawText("Hello from Wave", 200, 280, 24, &white);
+        ClearBackground(black);
+        DrawText("Hello from Wave", 200, 280, 24, white);
 
         EndDrawing();
     }

@@ -12,11 +12,11 @@ fun main() {
     while (WindowShouldClose() == 0) {
         BeginDrawing();
 
-        ClearBackground(&bg);
+        ClearBackground(bg);
 
-        DrawLine(100, 100, 300, 100, &red);
-        DrawCircle(400, 300, 50.0, &green);
-        DrawRectangle(500, 200, 120, 80, &blue);
+        DrawLine(100, 100, 300, 100, red);
+        DrawCircle(400, 300, 50.0, green);
+        DrawRectangle(500, 200, 120, 80, blue);
 
         EndDrawing();
     }
