@@ -1,6 +1,716 @@
+type bool = u8; // C _Bool ABI
+
+const LIGHTGRAY:  Color = Color { r: 200, g: 200, b: 200, a: 255 };
+const GRAY:       Color = Color { r: 130, g: 130, b: 130, a: 255 };
+const DARKGRAY:   Color = Color { r: 80,  g: 80,  b: 80,  a: 255 };
+const YELLOW:     Color = Color { r: 253, g: 249, b: 0,   a: 255 };
+const GOLD:       Color = Color { r: 255, g: 203, b: 0,   a: 255 };
+const ORANGE:     Color = Color { r: 255, g: 161, b: 0,   a: 255 };
+const PINK:       Color = Color { r: 255, g: 109, b: 194, a: 255 };
+const RED:        Color = Color { r: 230, g: 41,  b: 55,  a: 255 };
+const MAROON:     Color = Color { r: 190, g: 33,  b: 55,  a: 255 };
+
+const GREEN:      Color = Color { r: 0,   g: 228, b: 48,  a: 255 };
+const LIME:       Color = Color { r: 0,   g: 158, b: 47,  a: 255 };
+const DARKGREEN:  Color = Color { r: 0,   g: 117, b: 44,  a: 255 };
+
+const SKYBLUE:    Color = Color { r: 102, g: 191, b: 255, a: 255 };
+const BLUE:       Color = Color { r: 0,   g: 121, b: 241, a: 255 };
+const DARKBLUE:   Color = Color { r: 0,   g: 82,  b: 172, a: 255 };
+
+const PURPLE:     Color = Color { r: 200, g: 122, b: 255, a: 255 };
+const VIOLET:     Color = Color { r: 135, g: 60,  b: 190, a: 255 };
+const DARKPURPLE: Color = Color { r: 112, g: 31,  b: 126, a: 255 };
+
+const BEIGE:      Color = Color { r: 211, g: 176, b: 131, a: 255 };
+const BROWN:      Color = Color { r: 127, g: 106, b: 79,  a: 255 };
+const DARKBROWN:  Color = Color { r: 76,  g: 63,  b: 47,  a: 255 };
+
+const WHITE:      Color = Color { r: 255, g: 255, b: 255, a: 255 };
+const BLACK:      Color = Color { r: 0,   g: 0,   b: 0,   a: 255 };
+const BLANK:      Color = Color { r: 0,   g: 0,   b: 0,   a: 0   };
+const MAGENTA:    Color = Color { r: 255, g: 0,   b: 255, a: 255 };
+const RAYWHITE:   Color = Color { r: 245, g: 245, b: 245, a: 255 };
+
+struct Vector2 {
+    x: f32;                
+    y: f32;
+}
+
+struct Vector3 {
+    x: f32;
+    y: f32;
+    z: f32;
+}
+
+struct Vector4 {
+    x: f32;
+    y: f32;
+    z: f32;
+    w: f32;
+}
+
+type Quaternion = Vector4;
+
+struct Matrix {
+    m0:  f32; m4:  f32; m8:  f32; m12: f32;
+    m1:  f32; m5:  f32; m9:  f32; m13: f32;
+    m2:  f32; m6:  f32; m10: f32; m14: f32;
+    m3:  f32; m7:  f32; m11: f32; m15: f32;
+}
+
+struct Color {
+    r: u8;
+    g: u8;
+    b: u8;
+    a: u8;
+}
+
+struct Rectangle {
+    x: f32;                
+    y: f32;                
+    width: f32;            
+    height: f32;           
+}
+
+struct Image {
+    data: ptr<void>;             
+    width: i32;              
+    height: i32;             
+    mipmaps: i32;            
+    format: i32;             
+}
+
+struct Texture {
+    id: u32;        
+    width: i32;              
+    height: i32;             
+    mipmaps: i32;            
+    format: i32;             
+}
+
+type Texture2D = Texture;
+type TextureCubemap = Texture;
+
+struct RenderTexture {
+    id: u32;        
+    texture: Texture;        
+    depth: Texture;          
+}
+
+type RenderTexture2D = RenderTexture;
+
+struct NPatchInfo {
+    source: Rectangle;       
+    left: i32;               
+    top: i32;                
+    right: i32;              
+    bottom: i32;             
+    layout: i32;             
+}
+
+struct GlyphInfo {
+    value: i32;              
+    offsetX: i32;            
+    offsetY: i32;            
+    advanceX: i32;           
+    image: Image;            
+}
+
+struct Font {
+    baseSize: i32;           
+    glyphCount: i32;         
+    glyphPadding: i32;       
+    texture: Texture2D;      
+    recs: ptr<Rectangle>;        
+    glyphs: ptr<GlyphInfo>;      
+}
+
+struct Camera3D {
+    position: Vector3;       
+    target: Vector3;         
+    up: Vector3;             
+    fovy: f32;             
+    projection: i32;         
+}
+
+type Camera = Camera3D;
+
+struct Camera2D {
+    offset: Vector2;         
+    target: Vector2;         
+    rotation: f32;         
+    zoom: f32;             
+}
 
 
-// ----------------------------------------
+struct Mesh {
+    vertexCount: i32;        
+    triangleCount: i32;      
+    vertices: ptr<f32>;        
+    texcoords: ptr<f32>;       
+    texcoords2: ptr<f32>;      
+    normals: ptr<f32>;         
+    tangents: ptr<f32>;        
+    colors: ptr<u8>;      
+    indices: ptr<u16>;    
+    animVertices: ptr<f32>;    
+    animNormals: ptr<f32>;     
+    boneIds: ptr<u8>; 
+    boneWeights: ptr<f32>;     
+    boneMatrices: ptr<Matrix>;   
+    boneCount: i32;          
+    vaoId: u32;     
+    vboId: ptr<u32>;    
+}
+
+struct Shader {
+    id: u32;        
+    locs: ptr<i32>;              
+}
+
+struct MaterialMap {
+    texture: Texture2D;      
+    color: Color;            
+    value: f32;            
+}
+
+struct Material {
+    shader: Shader;
+    maps: ptr<MaterialMap>;
+    params: array<f32, 4>;
+}
+
+struct Transform {
+    translation: Vector3;    
+    rotation: Quaternion;    
+    scale: Vector3;          
+}
+
+struct BoneInfo {
+    name: array<char, 32>;          
+    parent: i32;             
+}
+
+struct Model {
+    transform: Matrix;
+    meshCount: i32;
+    materialCount: i32;
+    meshes: ptr<Mesh>;
+    materials: ptr<Material>;
+    meshMaterial: ptr<i32>;
+    boneCount: i32;
+    bones: ptr<BoneInfo>;
+    bindPose: ptr<Transform>;
+}
+
+struct ModelAnimation {
+    boneCount: i32;
+    frameCount: i32;
+    bones: ptr<BoneInfo>;
+    framePoses: ptr<ptr<Transform>>;
+    name: [i8; 32];
+}
+
+struct Ray {
+    position: Vector3;
+    direction: Vector3;
+}
+
+struct RayCollision {
+    hit: bool;
+    distance: f32;
+    point: Vector3;
+    normal: Vector3;
+}
+
+struct BoundingBox {
+    min: Vector3;
+    max: Vector3;
+}
+
+struct Wave {
+    frameCount: u32;
+    sampleRate: u32;
+    sampleSize: u32;
+    channels: u32;
+    data: ptr<void>;
+}
+
+struct rAudioBuffer {};
+struct rAudioProcessor {};
+
+struct AudioStream {
+    buffer: ptr<rAudioBuffer>;
+    processor: ptr<rAudioProcessor>;
+    sampleRate: u32;
+    sampleSize: u32;
+    channels: u32;
+}
+
+struct Sound {
+    stream: AudioStream;
+    frameCount: u32;
+}
+
+struct Music {
+    stream: AudioStream;
+    frameCount: u32;
+    looping: bool;
+    ctxType: i32;
+    ctxData: ptr<void>;
+}
+
+struct VrDeviceInfo {
+    hResolution: i32;
+    vResolution: i32;
+    hScreenSize: f32;
+    vScreenSize: f32;
+    eyeToScreenDistance: f32;
+    lensSeparationDistance: f32;
+    interpupillaryDistance: f32;
+    lensDistortionValues: array<f32, 4>;
+    chromaAbCorrection: array<f32, 4>;
+}
+
+struct VrStereoConfig {
+    projection: array<Matrix, 2>;
+    viewOffset: array<Matrix, 2>;
+    leftLensCenter: array<f32, 2>;
+    rightLensCenter: array<f32, 2>;
+    leftScreenCenter: array<f32, 2>;
+    rightScreenCenter: array<f32, 2>;
+    scale: array<f32, 2>;
+    scaleIn: array<f32, 2>;
+}
+
+struct FilePathList {
+    count: u32;
+    paths: ptr<ptr<i8>>;
+}
+
+struct AutomationEvent {
+    frame: u32;
+    type: u32;
+    params: array<i32, 4>;
+}
+
+struct AutomationEventList {
+    capacity: u32;
+    count: u32;
+    events: ptr<AutomationEvent>;
+}
+
+enum ConfigFlags -> u32 {
+    FLAG_VSYNC_HINT         = 0x00000040,   
+    FLAG_FULLSCREEN_MODE    = 0x00000002,   
+    FLAG_WINDOW_RESIZABLE   = 0x00000004,   
+    FLAG_WINDOW_UNDECORATED = 0x00000008,   
+    FLAG_WINDOW_HIDDEN      = 0x00000080,   
+    FLAG_WINDOW_MINIMIZED   = 0x00000200,   
+    FLAG_WINDOW_MAXIMIZED   = 0x00000400,   
+    FLAG_WINDOW_UNFOCUSED   = 0x00000800,   
+    FLAG_WINDOW_TOPMOST     = 0x00001000,   
+    FLAG_WINDOW_ALWAYS_RUN  = 0x00000100,   
+    FLAG_WINDOW_TRANSPARENT = 0x00000010,   
+    FLAG_WINDOW_HIGHDPI     = 0x00002000,   
+    FLAG_WINDOW_MOUSE_PASSTHROUGH = 0x00004000, 
+    FLAG_BORDERLESS_WINDOWED_MODE = 0x00008000, 
+    FLAG_MSAA_4X_HINT       = 0x00000020,   
+    FLAG_INTERLACED_HINT    = 0x00010000    
+}
+
+
+
+enum TraceLogLevel -> i32 {
+    LOG_ALL = 0,        
+    LOG_TRACE,          
+    LOG_DEBUG,          
+    LOG_INFO,           
+    LOG_WARNING,        
+    LOG_ERROR,          
+    LOG_FATAL,          
+    LOG_NONE            
+}
+
+enum KeyboardKey -> i32 {
+    KEY_NULL            = 0,        
+    
+    KEY_APOSTROPHE      = 39,       
+    KEY_COMMA           = 44,       
+    KEY_MINUS           = 45,       
+    KEY_PERIOD          = 46,       
+    KEY_SLASH           = 47,       
+    KEY_ZERO            = 48,       
+    KEY_ONE             = 49,       
+    KEY_TWO             = 50,       
+    KEY_THREE           = 51,       
+    KEY_FOUR            = 52,       
+    KEY_FIVE            = 53,       
+    KEY_SIX             = 54,       
+    KEY_SEVEN           = 55,       
+    KEY_EIGHT           = 56,       
+    KEY_NINE            = 57,       
+    KEY_SEMICOLON       = 59,       
+    KEY_EQUAL           = 61,       
+    KEY_A               = 65,       
+    KEY_B               = 66,       
+    KEY_C               = 67,       
+    KEY_D               = 68,       
+    KEY_E               = 69,       
+    KEY_F               = 70,       
+    KEY_G               = 71,       
+    KEY_H               = 72,       
+    KEY_I               = 73,       
+    KEY_J               = 74,       
+    KEY_K               = 75,       
+    KEY_L               = 76,       
+    KEY_M               = 77,       
+    KEY_N               = 78,       
+    KEY_O               = 79,       
+    KEY_P               = 80,       
+    KEY_Q               = 81,       
+    KEY_R               = 82,       
+    KEY_S               = 83,       
+    KEY_T               = 84,       
+    KEY_U               = 85,       
+    KEY_V               = 86,       
+    KEY_W               = 87,       
+    KEY_X               = 88,       
+    KEY_Y               = 89,       
+    KEY_Z               = 90,       
+    KEY_LEFT_BRACKET    = 91,       
+    KEY_BACKSLASH       = 92,       
+    KEY_RIGHT_BRACKET   = 93,       
+    KEY_GRAVE           = 96,       
+    
+    KEY_SPACE           = 32,       
+    KEY_ESCAPE          = 256,      
+    KEY_ENTER           = 257,      
+    KEY_TAB             = 258,      
+    KEY_BACKSPACE       = 259,      
+    KEY_INSERT          = 260,      
+    KEY_DELETE          = 261,      
+    KEY_RIGHT           = 262,      
+    KEY_LEFT            = 263,      
+    KEY_DOWN            = 264,      
+    KEY_UP              = 265,      
+    KEY_PAGE_UP         = 266,      
+    KEY_PAGE_DOWN       = 267,      
+    KEY_HOME            = 268,      
+    KEY_END             = 269,      
+    KEY_CAPS_LOCK       = 280,      
+    KEY_SCROLL_LOCK     = 281,      
+    KEY_NUM_LOCK        = 282,      
+    KEY_PRINT_SCREEN    = 283,      
+    KEY_PAUSE           = 284,      
+    KEY_F1              = 290,      
+    KEY_F2              = 291,      
+    KEY_F3              = 292,      
+    KEY_F4              = 293,      
+    KEY_F5              = 294,      
+    KEY_F6              = 295,      
+    KEY_F7              = 296,      
+    KEY_F8              = 297,      
+    KEY_F9              = 298,      
+    KEY_F10             = 299,      
+    KEY_F11             = 300,      
+    KEY_F12             = 301,      
+    KEY_LEFT_SHIFT      = 340,      
+    KEY_LEFT_CONTROL    = 341,      
+    KEY_LEFT_ALT        = 342,      
+    KEY_LEFT_SUPER      = 343,      
+    KEY_RIGHT_SHIFT     = 344,      
+    KEY_RIGHT_CONTROL   = 345,      
+    KEY_RIGHT_ALT       = 346,      
+    KEY_RIGHT_SUPER     = 347,      
+    KEY_KB_MENU         = 348,      
+    
+    KEY_KP_0            = 320,      
+    KEY_KP_1            = 321,      
+    KEY_KP_2            = 322,      
+    KEY_KP_3            = 323,      
+    KEY_KP_4            = 324,      
+    KEY_KP_5            = 325,      
+    KEY_KP_6            = 326,      
+    KEY_KP_7            = 327,      
+    KEY_KP_8            = 328,      
+    KEY_KP_9            = 329,      
+    KEY_KP_DECIMAL      = 330,      
+    KEY_KP_DIVIDE       = 331,      
+    KEY_KP_MULTIPLY     = 332,      
+    KEY_KP_SUBTRACT     = 333,      
+    KEY_KP_ADD          = 334,      
+    KEY_KP_ENTER        = 335,      
+    KEY_KP_EQUAL        = 336,      
+    
+    KEY_BACK            = 4,        
+    KEY_MENU            = 5,        
+    KEY_VOLUME_UP       = 24,       
+    KEY_VOLUME_DOWN     = 25        
+}
+
+#define MOUSE_LEFT_BUTTON   MOUSE_BUTTON_LEFT
+#define MOUSE_RIGHT_BUTTON  MOUSE_BUTTON_RIGHT
+#define MOUSE_MIDDLE_BUTTON MOUSE_BUTTON_MIDDLE
+
+enum MouseButton -> i32 {
+    MOUSE_BUTTON_LEFT    = 0,       
+    MOUSE_BUTTON_RIGHT   = 1,       
+    MOUSE_BUTTON_MIDDLE  = 2,       
+    MOUSE_BUTTON_SIDE    = 3,       
+    MOUSE_BUTTON_EXTRA   = 4,       
+    MOUSE_BUTTON_FORWARD = 5,       
+    MOUSE_BUTTON_BACK    = 6,       
+}
+
+enum MouseCursor -> i32 {
+    MOUSE_CURSOR_DEFAULT       = 0,     
+    MOUSE_CURSOR_ARROW         = 1,     
+    MOUSE_CURSOR_IBEAM         = 2,     
+    MOUSE_CURSOR_CROSSHAIR     = 3,     
+    MOUSE_CURSOR_POINTING_HAND = 4,     
+    MOUSE_CURSOR_RESIZE_EW     = 5,     
+    MOUSE_CURSOR_RESIZE_NS     = 6,     
+    MOUSE_CURSOR_RESIZE_NWSE   = 7,     
+    MOUSE_CURSOR_RESIZE_NESW   = 8,     
+    MOUSE_CURSOR_RESIZE_ALL    = 9,     
+    MOUSE_CURSOR_NOT_ALLOWED   = 10     
+}
+
+
+enum GamepadButton -> i32 {
+    GAMEPAD_BUTTON_UNKNOWN = 0,         
+    GAMEPAD_BUTTON_LEFT_FACE_UP,        
+    GAMEPAD_BUTTON_LEFT_FACE_RIGHT,     
+    GAMEPAD_BUTTON_LEFT_FACE_DOWN,      
+    GAMEPAD_BUTTON_LEFT_FACE_LEFT,      
+    GAMEPAD_BUTTON_RIGHT_FACE_UP,       
+    GAMEPAD_BUTTON_RIGHT_FACE_RIGHT,    
+    GAMEPAD_BUTTON_RIGHT_FACE_DOWN,     
+    GAMEPAD_BUTTON_RIGHT_FACE_LEFT,     
+    GAMEPAD_BUTTON_LEFT_TRIGGER_1,      
+    GAMEPAD_BUTTON_LEFT_TRIGGER_2,      
+    GAMEPAD_BUTTON_RIGHT_TRIGGER_1,     
+    GAMEPAD_BUTTON_RIGHT_TRIGGER_2,     
+    GAMEPAD_BUTTON_MIDDLE_LEFT,         
+    GAMEPAD_BUTTON_MIDDLE,              
+    GAMEPAD_BUTTON_MIDDLE_RIGHT,        
+    GAMEPAD_BUTTON_LEFT_THUMB,          
+    GAMEPAD_BUTTON_RIGHT_THUMB          
+}
+
+
+enum GamepadAxis -> i32 {
+    GAMEPAD_AXIS_LEFT_X        = 0,     
+    GAMEPAD_AXIS_LEFT_Y        = 1,     
+    GAMEPAD_AXIS_RIGHT_X       = 2,     
+    GAMEPAD_AXIS_RIGHT_Y       = 3,     
+    GAMEPAD_AXIS_LEFT_TRIGGER  = 4,     
+    GAMEPAD_AXIS_RIGHT_TRIGGER = 5      
+}
+
+
+enum MaterialMapIndex -> i32 {
+    MATERIAL_MAP_ALBEDO = 0,        
+    MATERIAL_MAP_METALNESS,         
+    MATERIAL_MAP_NORMAL,            
+    MATERIAL_MAP_ROUGHNESS,         
+    MATERIAL_MAP_OCCLUSION,         
+    MATERIAL_MAP_EMISSION,          
+    MATERIAL_MAP_HEIGHT,            
+    MATERIAL_MAP_CUBEMAP,           
+    MATERIAL_MAP_IRRADIANCE,        
+    MATERIAL_MAP_PREFILTER,         
+    MATERIAL_MAP_BRDF               
+}
+
+#define MATERIAL_MAP_DIFFUSE      MATERIAL_MAP_ALBEDO
+#define MATERIAL_MAP_SPECULAR     MATERIAL_MAP_METALNESS
+
+enum ShaderLocationIndex -> i32 {
+    SHADER_LOC_VERTEX_POSITION = 0, 
+    SHADER_LOC_VERTEX_TEXCOORD01,   
+    SHADER_LOC_VERTEX_TEXCOORD02,   
+    SHADER_LOC_VERTEX_NORMAL,       
+    SHADER_LOC_VERTEX_TANGENT,      
+    SHADER_LOC_VERTEX_COLOR,        
+    SHADER_LOC_MATRIX_MVP,          
+    SHADER_LOC_MATRIX_VIEW,         
+    SHADER_LOC_MATRIX_PROJECTION,   
+    SHADER_LOC_MATRIX_MODEL,        
+    SHADER_LOC_MATRIX_NORMAL,       
+    SHADER_LOC_VECTOR_VIEW,         
+    SHADER_LOC_COLOR_DIFFUSE,       
+    SHADER_LOC_COLOR_SPECULAR,      
+    SHADER_LOC_COLOR_AMBIENT,       
+    SHADER_LOC_MAP_ALBEDO,          
+    SHADER_LOC_MAP_METALNESS,       
+    SHADER_LOC_MAP_NORMAL,          
+    SHADER_LOC_MAP_ROUGHNESS,       
+    SHADER_LOC_MAP_OCCLUSION,       
+    SHADER_LOC_MAP_EMISSION,        
+    SHADER_LOC_MAP_HEIGHT,          
+    SHADER_LOC_MAP_CUBEMAP,         
+    SHADER_LOC_MAP_IRRADIANCE,      
+    SHADER_LOC_MAP_PREFILTER,       
+    SHADER_LOC_MAP_BRDF,            
+    SHADER_LOC_VERTEX_BONEIDS,      
+    SHADER_LOC_VERTEX_BONEWEIGHTS,  
+    SHADER_LOC_BONE_MATRICES,       
+    SHADER_LOC_VERTEX_INSTANCE_TX   
+} ShaderLocationIndex;
+
+#define SHADER_LOC_MAP_DIFFUSE      SHADER_LOC_MAP_ALBEDO
+#define SHADER_LOC_MAP_SPECULAR     SHADER_LOC_MAP_METALNESS
+
+enum ShaderUniformDataType -> i32 {
+    SHADER_UNIFORM_FLOAT = 0,       
+    SHADER_UNIFORM_VEC2,            
+    SHADER_UNIFORM_VEC3,            
+    SHADER_UNIFORM_VEC4,            
+    SHADER_UNIFORM_INT,             
+    SHADER_UNIFORM_IVEC2,           
+    SHADER_UNIFORM_IVEC3,           
+    SHADER_UNIFORM_IVEC4,           
+    SHADER_UNIFORM_UINT,            
+    SHADER_UNIFORM_UIVEC2,          
+    SHADER_UNIFORM_UIVEC3,          
+    SHADER_UNIFORM_UIVEC4,          
+    SHADER_UNIFORM_SAMPLER2D        
+}
+
+enum ShaderAttributeDataType -> i32 {
+    SHADER_ATTRIB_FLOAT = 0,        
+    SHADER_ATTRIB_VEC2,             
+    SHADER_ATTRIB_VEC3,             
+    SHADER_ATTRIB_VEC4              
+}
+
+enum PixelFormat -> i32 {
+    PIXELFORMAT_UNCOMPRESSED_GRAYSCALE = 1, 
+    PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,    
+    PIXELFORMAT_UNCOMPRESSED_R5G6B5,        
+    PIXELFORMAT_UNCOMPRESSED_R8G8B8,        
+    PIXELFORMAT_UNCOMPRESSED_R5G5B5A1,      
+    PIXELFORMAT_UNCOMPRESSED_R4G4B4A4,      
+    PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,      
+    PIXELFORMAT_UNCOMPRESSED_R32,           
+    PIXELFORMAT_UNCOMPRESSED_R32G32B32,     
+    PIXELFORMAT_UNCOMPRESSED_R32G32B32A32,  
+    PIXELFORMAT_UNCOMPRESSED_R16,           
+    PIXELFORMAT_UNCOMPRESSED_R16G16B16,     
+    PIXELFORMAT_UNCOMPRESSED_R16G16B16A16,  
+    PIXELFORMAT_COMPRESSED_DXT1_RGB,        
+    PIXELFORMAT_COMPRESSED_DXT1_RGBA,       
+    PIXELFORMAT_COMPRESSED_DXT3_RGBA,       
+    PIXELFORMAT_COMPRESSED_DXT5_RGBA,       
+    PIXELFORMAT_COMPRESSED_ETC1_RGB,        
+    PIXELFORMAT_COMPRESSED_ETC2_RGB,        
+    PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA,   
+    PIXELFORMAT_COMPRESSED_PVRT_RGB,        
+    PIXELFORMAT_COMPRESSED_PVRT_RGBA,       
+    PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA,   
+    PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA    
+}
+
+enum TextureFilter -> i32 {
+    TEXTURE_FILTER_POINT = 0,               
+    TEXTURE_FILTER_BILINEAR,                
+    TEXTURE_FILTER_TRILINEAR,               
+    TEXTURE_FILTER_ANISOTROPIC_4X,          
+    TEXTURE_FILTER_ANISOTROPIC_8X,          
+    TEXTURE_FILTER_ANISOTROPIC_16X,         
+}
+
+
+ enum TextureWrap -> i32 {
+    TEXTURE_WRAP_REPEAT = 0,                
+    TEXTURE_WRAP_CLAMP,                     
+    TEXTURE_WRAP_MIRROR_REPEAT,             
+    TEXTURE_WRAP_MIRROR_CLAMP               
+}
+
+enum CubemapLayout -> i32 {
+    CUBEMAP_LAYOUT_AUTO_DETECT = 0,         
+    CUBEMAP_LAYOUT_LINE_VERTICAL,           
+    CUBEMAP_LAYOUT_LINE_HORIZONTAL,         
+    CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR,     
+    CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE     
+}
+
+
+enum FontType -> i32 {
+    FONT_DEFAULT = 0,               
+    FONT_BITMAP,                    
+    FONT_SDF                        
+}
+
+enum BlendMode -> i32 {
+    BLEND_ALPHA = 0,                
+    BLEND_ADDITIVE,                 
+    BLEND_MULTIPLIED,               
+    BLEND_ADD_COLORS,               
+    BLEND_SUBTRACT_COLORS,          
+    BLEND_ALPHA_PREMULTIPLY,        
+    BLEND_CUSTOM,                   
+    BLEND_CUSTOM_SEPARATE           
+}
+
+enum Gesture -> i32 {
+    GESTURE_NONE        = 0,        
+    GESTURE_TAP         = 1,        
+    GESTURE_DOUBLETAP   = 2,        
+    GESTURE_HOLD        = 4,        
+    GESTURE_DRAG        = 8,        
+    GESTURE_SWIPE_RIGHT = 16,       
+    GESTURE_SWIPE_LEFT  = 32,       
+    GESTURE_SWIPE_UP    = 64,       
+    GESTURE_SWIPE_DOWN  = 128,      
+    GESTURE_PINCH_IN    = 256,      
+    GESTURE_PINCH_OUT   = 512       
+}
+
+enum CameraMode -> i32 {
+    CAMERA_CUSTOM = 0,              
+    CAMERA_FREE,                    
+    CAMERA_ORBITAL,                 
+    CAMERA_FIRST_PERSON,            
+    CAMERA_THIRD_PERSON             
+}
+
+
+enum CameraProjection -> i32 {
+    CAMERA_PERSPECTIVE = 0,         
+    CAMERA_ORTHOGRAPHIC             
+}
+
+enum NPatchLayout -> i32 {
+    NPATCH_NINE_PATCH = 0,          
+    NPATCH_THREE_PATCH_VERTICAL,    
+    NPATCH_THREE_PATCH_HORIZONTAL   
+}
+
+
+struct TraceLogCallback {
+    ptr: ptr<void>;
+}
+
+struct LoadFileDataCallback {
+    ptr: ptr<void>;
+}
+
+struct SaveFileDataCallback {
+    ptr: ptr<void>;
+}
+
+struct LoadFileTextCallback {
+    ptr: ptr<void>;
+}
+
+struct SaveFileTextCallback {
+    ptr: ptr<void>;
+}
 
 struct AudioCallback {
     ptr: ptr<void>;
@@ -136,16 +846,16 @@ extern(c) {
     fun SetLoadFileTextCallback(callback: LoadFileTextCallback);
     fun SetSaveFileTextCallback(callback: SaveFileTextCallback);
     fun FileRename(fileName: ptr<i8>, fileRename: ptr<i8>) -> i32;
-    fun FileRemove(*fileName: const char) -> i32;
+    fun FileRemove(fileName: ptr<i8>) -> i32;
     fun FileCopy(srcPath: ptr<i8>, dstPath: ptr<i8>) -> i32;
     fun FileMove(srcPath: ptr<i8>, dstPath: ptr<i8>) -> i32;
     fun FileTextReplace(fileName: ptr<i8>, search: ptr<i8>, replacement: ptr<i8>) -> i32;
-    fun FileTextFindIndex(*fileName: const char, *search: const char) -> i32;
+    fun FileTextFindIndex(fileName: ptr<i8>, search: ptr<i8>) -> i32;
     fun FileExists(fileName: ptr<i8>) -> bool;
     fun DirectoryExists(dirPath: ptr<i8>) -> bool;
     fun IsFileExtension(fileName: ptr<i8>, ext: ptr<i8>) -> bool;
     fun GetFileLength(fileName: ptr<i8>) -> i32;
-    fun GetFileModTime(*fileName: ptr<i8>) -> i64;
+    fun GetFileModTime(fileName: ptr<i8>) -> i64;
     fun GetFileExtension(fileName: ptr<i8>) -> ptr<i8>;
     fun GetFileName(filePath: ptr<i8>) -> ptr<i8>;
     fun GetFileNameWithoutExt(filePath: ptr<i8>) -> ptr<i8>;
@@ -169,7 +879,7 @@ extern(c) {
     fun DecompressData(compData: ptr<u8>, compDataSize: i32, dataSize: ptr<i32>) -> ptr<u8>;
     fun EncodeDataBase64(data: ptr<u8>, dataSize: i32, outputSize: ptr<i32>) -> ptr<i8>;
     fun DecodeDataBase64(text: ptr<i8>, outputSize: ptr<i32>) -> ptr<u8>;
-    fun ComputeCRC32(data: ptr<u8>, dataSize: i32) -> u8;
+    fun ComputeCRC32(data: ptr<u8>, dataSize: i32) -> u32;
     fun ComputeMD5(data: ptr<u8>, dataSize: i32) -> ptr<u8>;
     fun ComputeSHA1(data: ptr<u8>, dataSize: i32) -> ptr<u8>;
     fun ComputeSHA256(data: ptr<u8>, dataSize: i32) -> ptr<u8>;
@@ -410,7 +1120,7 @@ extern(c) {
     fun ColorAlpha(color: Color, alpha: i32) -> Color;
     fun ColorAlphaBlend(dst: Color, src: Color, tint: Color) -> Color;
     fun ColorLerp(color1: Color, color2: Color, factor: i32) -> Color;
-    fun GetColor(hexValue: unsigned i32) -> Color;
+    fun GetColor(hexValue: u32) -> Color;
     fun GetPixelColor(srcPtr: ptr<u8>, format: i32) -> Color;
     fun SetPixelColor(dstPtr: ptr<u8>, color: Color, format: i32);
     fun GetPixelDataSize(width: i32, height: i32, format: i32) -> i32;
@@ -418,9 +1128,9 @@ extern(c) {
     fun LoadFont(fileName: ptr<i8>) -> Font;
     fun LoadFontEx(fileName: ptr<i8>, fontSize: i32, codepoints: ptr<i32>, codepointCount: i32) -> Font;
     fun LoadFontFromImage(image: Image, key: Color, firstChar: i32) -> Font;
-    fun LoadFontFromMemory(fileType: ptr<i8>, fileData: ptr<u8>, dataSize: i32, fontSize: i32, *codepoints: const i32, codepointCount: i32) -> Font;
+    fun LoadFontFromMemory(fileType: ptr<i8>, fileData: ptr<u8>, dataSize: i32, fontSize: i32, codepoints: ptr<i32>, codepointCount: i32) -> Font;
     fun IsFontValid(font: Font) -> bool;
-    fun LoadFontData(fileData: ptr<u8>, dataSize: i32, fontSize: i32, codepoints ptr<i32>, i32 codepointCount, type: i32, glyphCount: ptr<i32>) -> ptr<GlyphInfo>;
+    fun LoadFontData(fileData: ptr<u8>, dataSize: i32, fontSize: i32, codepoints: ptr<i32>, codepointCount: i32, type: i32, glyphCount: ptr<i32>) -> ptr<GlyphInfo>;
     fun GenImageFontAtlas(glyphs: ptr<GlyphInfo>, glyphRecs: ptr<ptr<Rectangle>>, glyphCount: i32, fontSize: i32, padding: i32, packMethod: i32) -> Image;
     fun UnloadFontData(glyphs: ptr<GlyphInfo>, glyphCount: i32);
     fun UnloadFont(font: Font);
