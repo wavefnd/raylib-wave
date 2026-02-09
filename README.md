@@ -45,6 +45,41 @@ You can now use raylib APIs directly from Wave.
 
 ---
 
+## Example
+
+<img width="794" height="477" alt="image" src="https://github.com/user-attachments/assets/5657a700-a502-4978-a076-2d9c63f3eaaa" />
+
+<br />
+
+```wave
+import("raylib");
+
+fun main() {
+    var screenWidth: i32 = 800;
+    var screenHeight: i32 = 450;
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+
+    SetTargetFPS(60);
+
+    var raywhite: Color = Color { r: 245, g: 245, b: 245, a: 255 };
+    var lightgray: Color = Color { r: 200, g: 130, b: 130, a: 255 };
+
+    while(WindowShouldClose() == 0) {
+        BeginDrawing();
+
+        ClearBackground(raywhite);
+
+        DrawText("Congrats! You created your first window!", 190, 200, 20, lightgray);
+
+        EndDrawing();
+    }
+
+    CloseWindow();
+}
+```
+
+---
+
 ## License
 
 This project follows the same license as the Zlib.
