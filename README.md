@@ -7,7 +7,7 @@ This library allows you to develop games using raylib with the Wave programming 
 
 ## Requirements
 
-- Wave: v0.1.7-pre-beta or later (or latest master)
+- A current `wavec` with `--link` support
 - raylib: 5.5.0
 - Operating System: Linux (Fedora 43 recommended)
 
@@ -42,6 +42,27 @@ import("raylib");
 ```
 
 You can now use raylib APIs directly from Wave.
+
+### 4. Build and link
+
+`raylib` is a library name, not a linker executable. Keep Wave's default linker and pass the library with `--link=raylib`:
+
+```bash
+wavec --link=raylib build examples/example.wave -o target/example
+./target/example
+```
+
+The included Makefile obtains raylib search paths and library names from `pkg-config` and converts `-lraylib` to Wave's `--link=raylib` form.
+
+```bash
+make
+make run EXAMPLE=example
+make run EXAMPLE=shapes
+make check
+make print-config
+```
+
+Use `WAVEC=/path/to/wavec` to select another compiler. `RAYLIB_PACKAGE` can override the `pkg-config` package name, and `RAYLIB_LINK_FLAGS` can override all detected Wave linker flags.
 
 ---
 
